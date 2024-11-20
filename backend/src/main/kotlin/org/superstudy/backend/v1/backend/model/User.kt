@@ -1,4 +1,4 @@
-package org.superstudy.backend.v1.backend.flashcards.model
+package org.superstudy.backend.v1.backend.model
 
 import jakarta.persistence.*
 
