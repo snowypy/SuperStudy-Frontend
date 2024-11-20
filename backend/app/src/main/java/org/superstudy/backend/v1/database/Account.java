@@ -1,4 +1,4 @@
-package codes.snowy.superstudy.database.Account;
+package org.superstudy.backend.v1.database;
 
 import java.util.List;
 import org.springframework.data.annotation.id;

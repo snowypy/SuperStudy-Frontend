@@ -1,3 +1,4 @@
+package org.superstudy.backend.v1.database;
 public class MongoDB {
 
     // public static void main(String[] args) {
