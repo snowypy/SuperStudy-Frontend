@@ -34,10 +34,7 @@ export default function Login() {
 
   return (
     <div className="relative flex flex-col items-center justify-center min-h-screen overflow-hidden">
-      {/* Animated background */}
       <div className="absolute inset-0 bg-gradient-to-br from-purple-900 via-black to-indigo-900 animate-gradient" />
-      
-      {/* Dot pattern overlay */}
       <div className="absolute inset-0 grid grid-cols-[repeat(40,1fr)] grid-rows-[repeat(40,1fr)]">
         {[...Array(1600)].map((_, i) => (
           <motion.div
@@ -51,8 +48,6 @@ export default function Login() {
           />
         ))}
       </div>
-
-      {/* Content */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -88,7 +83,6 @@ export default function Login() {
               Sign in to continue your study journey
             </motion.p>
           </motion.div>
-
           <form onSubmit={handleSubmit} className="space-y-8">
             <motion.div
               initial={{ x: -50, opacity: 0 }}
@@ -103,7 +97,6 @@ export default function Login() {
                 className="w-full px-6 py-4 text-lg bg-white/10 border-white/20 text-white placeholder-gray-400 focus:border-yellow-300 focus:ring-yellow-300 transition-all duration-300"
               />
             </motion.div>
-
             <motion.div
               initial={{ x: 50, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
@@ -117,7 +110,6 @@ export default function Login() {
                 className="w-full px-6 py-4 text-lg bg-white/10 border-white/20 text-white placeholder-gray-400 focus:border-yellow-300 focus:ring-yellow-300 transition-all duration-300"
               />
             </motion.div>
-
             <motion.div
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
