@@ -5,12 +5,14 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --sidebar-background: #4a1d96;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    --sidebar-background: #4a1d96;
   }
 }
 
@@ -19,3 +21,8 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.bg-sidebar {
+  background-color: var(--sidebar-background);
+}
+
