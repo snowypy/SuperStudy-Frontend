@@ -40,19 +40,7 @@ export default function Flashcards() {
 
   return (
     <DashboardLayout>
-      <div className="relative min-h-screen">
-        <div className="absolute inset-0 grid grid-cols-[repeat(40,1fr)] grid-rows-[repeat(40,1fr)]">
-          {[...Array(1600)].map((_, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 0.3 }}
-              transition={{ delay: Math.random() * 2, duration: 2, repeat: Infinity, repeatType: 'reverse' }}
-              className="w-1 h-1 bg-yellow-300 rounded-full"
-            />
-          ))}
-        </div>
-
+      <div className="p-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
