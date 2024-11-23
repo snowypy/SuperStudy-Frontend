@@ -19,7 +19,7 @@ export default function Register() {
     e.preventDefault()
     setIsLoading(true)
     
-    const success = await register(username, password, inviteCode)
+    const success = await register(username, password) // , inviteCode)
     if (success) {
       router.push('/login')
     } else {
