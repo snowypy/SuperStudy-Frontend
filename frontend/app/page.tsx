@@ -68,15 +68,7 @@ export default function Home() {
             transition={{ delay: 0.4, type: 'spring', stiffness: 120 }}
             className="mt-3 text-2xl text-white mb-8"
           >
-            Your ultimate study companion with flash cards!
-          </motion.p>
-          <motion.p
-            initial={{ y: 20 }}
-            animate={{ y: 0 }}
-            transition={{ delay: 0.6, type: 'spring', stiffness: 120 }}
-            className="text-xl text-white mb-8"
-          >
-            Made by <span className="text-yellow-300">Cigan & Awel</span> for other students.
+            Your ultimate study companion.
           </motion.p>
           <motion.div
             initial={{ y: 20, opacity: 0 }}
