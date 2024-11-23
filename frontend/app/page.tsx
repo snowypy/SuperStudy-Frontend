@@ -2,15 +2,13 @@
 
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
 
 export default function Home() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
-
   useEffect(() => {
     const updateMousePosition = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY })
+      console.log('Mouse moved:', e.clientX, e.clientY)
     }
     window.addEventListener('mousemove', updateMousePosition)
     return () => {
