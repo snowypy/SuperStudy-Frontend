@@ -17,7 +17,7 @@
 
 - Admin Users:
     - <ip>/admin
-    - Give users the ability to access this via adding their email / username
+    - Give users the ability to access to other users by adding their email / username 
     - Allow emails/usernames to be granted admin access before they finish making their account (pre-signup). This should also bypass the invite code.
     - Allow admins to create invite codes, delete users and manually reset passwords
 
