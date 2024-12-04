@@ -4,25 +4,25 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { useAuth } from '../auth-provider'
 import { motion, AnimatePresence } from 'framer-motion'
+import { register } from '@/lib/api'
 
 export default function Register() {
   const [username, setUsername] = useState('')
+  const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [inviteCode, setInviteCode] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
-  const { register } = useAuth()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
     
-    const success = await register(username, password) // , inviteCode)
-    if (success) {
+    try {
+      await register(username, email, password, inviteCode)
       router.push('/login')
-    } else {
+    } catch (error) {
       setIsLoading(false)
       alert('Registration failed')
     }
@@ -112,6 +112,20 @@ export default function Register() {
               transition={{ delay: 0.6 }}
             >
               <Input
+                type="email"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full px-6 py-4 text-lg bg-white/10 border-white/20 text-white placeholder-gray-400 focus:border-yellow-300 focus:ring-yellow-300 transition-all duration-300"
+              />
+            </motion.div>
+
+            <motion.div
+              initial={{ x: -50, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ delay: 0.7 }}
+            >
+              <Input
                 type="password"
                 placeholder="Password"
                 value={password}
@@ -121,9 +135,9 @@ export default function Register() {
             </motion.div>
 
             <motion.div
-              initial={{ x: -50, opacity: 0 }}
+              initial={{ x: 50, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
-              transition={{ delay: 0.7 }}
+              transition={{ delay: 0.8 }}
             >
               <Input
                 type="text"
@@ -137,7 +151,7 @@ export default function Register() {
             <motion.div
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.8 }}
+              transition={{ delay: 0.9 }}
             >
               <Button
                 type="submit"

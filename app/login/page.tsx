@@ -4,23 +4,22 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { useAuth } from '../auth-provider'
 import { motion, AnimatePresence } from 'framer-motion'
+import { login } from '@/lib/api'
 
 export default function Login() {
-  const [username, setUsername] = useState('')
+  const [usernameOrEmail, setUsernameOrEmail] = useState('')
   const [password, setPassword] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
-  const { login } = useAuth()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
-    const success = await login(username, password)
-    if (success) {
+    try {
+      await login(usernameOrEmail, password)
       router.push('/flashcards')
-    } else {
+    } catch (error) {
       setIsLoading(false)
       alert('Login failed')
     }
@@ -91,9 +90,9 @@ export default function Login() {
             >
               <Input
                 type="text"
-                placeholder="Username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                placeholder="Username or Email"
+                value={usernameOrEmail}
+                onChange={(e) => setUsernameOrEmail(e.target.value)}
                 className="w-full px-6 py-4 text-lg bg-white/10 border-white/20 text-white placeholder-gray-400 focus:border-yellow-300 focus:ring-yellow-300 transition-all duration-300"
               />
             </motion.div>
