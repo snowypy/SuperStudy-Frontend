@@ -8,8 +8,8 @@ import Footer from "@/app/components/footer";
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
-    title: 'ZapStudy - Studying done right',
-    description: 'ZapStudy is a platform that helps you study more efficiently and effectively',
+    title: 'ZapLearn - Studying done right',
+    description: 'Learn quick + fast ❤️',
 }
 
 export default function RootLayout({
