@@ -11,7 +11,7 @@ const flashcards = [
     { id: 2, question: "Asadasd", answer: "1661" }
 ]
 
-export default function CourseFlashCardsPage({ params }: { params: { id: string } }) {
+export default function CourseFlashCardsPage() {
     const [currentCardIndex, setCurrentCardIndex] = useState(0)
     const [showAnswer, setShowAnswer] = useState(false)
     const [direction, setDirection] = useState(0)
