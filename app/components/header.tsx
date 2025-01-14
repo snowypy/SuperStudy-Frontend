@@ -11,7 +11,7 @@ export default function Header() {
     return (
         <header className="border-b border-gray-200 bg-white dark:bg-gray-800 dark:border-gray-700 transition-colors duration-300">
             <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-                <Link href="/" className="text-2xl font-bold">
+                <Link href="/" className="text-2xl font-bold text-black dark:text-white">
                     Zap<span className="text-black dark:text-white">Learn</span>
                 </Link>
                 <nav className="flex items-center">
@@ -20,7 +20,7 @@ export default function Header() {
                         <li><Link href="/my-courses" className="hover:text-gray-600 dark:hover:text-gray-300">My Courses</Link></li>
                         <li>
                             <Link href="/account">
-                                <Button variant="outline" className="text-black dark:text-white border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black">
+                                <Button variant="outline" className="text-black dark:text-white border-black dark: hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black">
                                     <User className="h-4 w-4 mr-2" />
                                     Account
                                 </Button>
