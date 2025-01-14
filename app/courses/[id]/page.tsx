@@ -60,6 +60,7 @@ export default function CourseFlashCardsPage({ params }: {params: { id: string }
                         className="border-black dark:border-white text-black dark:text-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black"
                     >
                         <ChevronLeft className="h-4 w-4 mr-2"/>
+                        Back
                     </Button>
                     <span className="text-sm text-gray-600 dark:text-gray-400">
                       Card {currentCardIndex + 1} of {flashcards.length}
