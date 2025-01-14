@@ -1,17 +1,17 @@
 'use client'
 
-import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const flashcards = [
     { id: 1, question: "What year did awel get a tesla?", answer: "2024" },
     { id: 2, question: "Asadasd", answer: "1661" }
 ]
 
-export default function CourseFlashCardsPage() {
+export default function CourseFlashCardsPage({ params }: {params: { id: string }}) {
     const [currentCardIndex, setCurrentCardIndex] = useState(0)
     const [showAnswer, setShowAnswer] = useState(false)
     const [direction, setDirection] = useState(0)
@@ -19,7 +19,7 @@ export default function CourseFlashCardsPage() {
     const nextCard = () => {
         setDirection(1)
         setCurrentCardIndex((prevIndex) => (prevIndex + 1) % flashcards.length)
-        setShowAnswer(true)
+        setShowAnswer(false)
     }
 
     const prevCard = () => {
@@ -35,18 +35,18 @@ export default function CourseFlashCardsPage() {
     const currentCard = flashcards[currentCardIndex]
 
     const slideVariants = {
-        enter: (direction:number) => ({
-            x: direction < 0 ? 1000 : -1000,
-            opacity: 0
+        enter: (direction: number) => ({
+            x: direction > 0 ? 1000 : -1000,
+            opacity: 0,
         }),
         center: {
             x: 0,
-            opacity: 1
+            opacity: 1,
         },
         exit: (direction: number) => ({
             x: direction < 0 ? 1000 : -1000,
             opacity: 0,
-        })
+        }),
     }
 
     return (
@@ -59,18 +59,17 @@ export default function CourseFlashCardsPage() {
                         variant="outline"
                         className="border-black dark:border-white text-black dark:text-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black"
                     >
-                        <ChevronLeft className="h-4 w-4 mr-2" />
-                        Previous
+                        <ChevronLeft className="h-4 w-4 mr-2"/>
                     </Button>
                     <span className="text-sm text-gray-600 dark:text-gray-400">
-                        Card {currentCardIndex + 1} of {flashcards.length}
+                      Card {currentCardIndex + 1} of {flashcards.length}
                     </span>
                     <Button
-                    onClick={nextCard}
-                    variant="outline"
-                    className="border-black dark:border-white text-black dark:text-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black"
+                        onClick={nextCard}
+                        variant="outline"
+                        className="border-black dark:border-white text-black dark:text-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black"
                     >
-                    Next
+                        Next
                         <ChevronRight className="h-4 w-4 ml-2"/>
                     </Button>
                 </div>
@@ -83,17 +82,18 @@ export default function CourseFlashCardsPage() {
                         initial="enter"
                         animate="center"
                         exit="exit"
-                        transition={{type: 'tween', duration: 0.5}}
+                        transition={{ type: 'tween', duration: 0.5 }}
+                        className="w-full"
                     >
                         <Card className="w-full min-h-[300px] bg-white dark:bg-gray-800 border-black dark:border-white shadow-lg">
                             <CardContent className="flex items-center justify-center h-full p-8">
                                 <AnimatePresence mode="wait">
                                     <motion.div
                                         key={showAnswer ? 'answer' : 'question'}
-                                        initial={{rotateY: 90, opacity: 0}}
-                                        animate={{rotateY: 0, opacity: 1}}
-                                        exit={{rotateY: -90, opacity: 0}}
-                                        transition={{duration: 0.3}}
+                                        initial={{ rotateY: 90, opacity: 0 }}
+                                        animate={{ rotateY: 0, opacity: 1 }}
+                                        exit={{ rotateY: -90, opacity: 0 }}
+                                        transition={{ duration: 0.3 }}
                                         className="w-full h-full flex flex-col items-center justify-center text-center"
                                     >
                                         <h2 className="text-xl font-semibold mb-4">{showAnswer ? 'Answer' : 'Question'}</h2>
@@ -108,8 +108,8 @@ export default function CourseFlashCardsPage() {
                 </AnimatePresence>
 
                 <Button
-                onClick={toggleAnswer}
-                className="mt-6 bg-black text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200"
+                    onClick={toggleAnswer}
+                    className="mt-6 bg-black text-white dark:bg-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200"
                 >
                     {showAnswer ? 'Show Question' : 'Show Answer'}
                 </Button>
