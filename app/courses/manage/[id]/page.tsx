@@ -16,7 +16,7 @@ interface FlashCard {
     answer: string
 }
 
-export default function ManageCoursePage({ params }: { params: { id: string } }) {
+export default function ManageCoursePage() {
     const [isLoading, setIsLoading] = useState(true)
     const [flashcards, setFlashcards] = useState<FlashCard[]>([])
     const [isSubmitting, setIsSubmitting] = useState(false)
