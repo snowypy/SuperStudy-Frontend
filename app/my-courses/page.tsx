@@ -56,8 +56,6 @@ export default function MyCoursesPage() {
                     ))}
                 </div>
             )}
-
         </div>
     )
-
 }
