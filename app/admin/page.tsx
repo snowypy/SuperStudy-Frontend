@@ -176,9 +176,9 @@ export default function AdminPage() {
                             {inviteCodes.map(inviteCode => (
                                 <TableRow key={inviteCode.id}>
                                     <TableCell>{inviteCode.code}</TableCell>
+                                    <TableCell>{inviteCode.usageCap}</TableCell>
                                     <TableCell>{inviteCode.usageCount}</TableCell>
                                     <TableCell>{inviteCode.expiration}</TableCell>
-                                    <TableCell>{inviteCode.usageCap}</TableCell>
                                     <TableCell>
                                         <Button
                                             variant="destructive"
