@@ -2,11 +2,13 @@
 
 import React, {useEffect, useState} from "react";
 import {useToast} from "@/hooks/use-toast";
-import {Loader2, Plus} from "lucide-react";
-import {Card, CardHeader, CardTitle} from "@/components/ui/card";
-import {Dialog, DialogHeader, DialogTrigger} from "@/components/ui/dialog";
+import {Loader2, Plus, Trash2} from "lucide-react";
+import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
+import {Dialog, DialogHeader, DialogTrigger, DialogContent, DialogTitle} from "@/components/ui/dialog";
 import {Button} from "@/components/ui/button";
-import {DialogContent, DialogTitle} from "@radix-ui/react-dialog";
+import {Label} from "@/components/ui/label";
+import {Input} from "@/components/ui/input";
+import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table";
 
 interface InviteCode {
     id: number
@@ -131,11 +133,67 @@ export default function AdminPage() {
                                 <DialogHeader>
                                     <DialogTitle>Create New Invite Code</DialogTitle>
                                 </DialogHeader>
-                                <form onSubmit={handleCreateInviteCode}> clas</form>
+                                <form onSubmit={handleCreateInviteCode} className="space-y-4 mt-4">
+                                    <div className="space-y-2">
+                                        <Label htmlFor="code">Code</Label>
+                                        <Input id="code" name="code" required/>
+                                    </div>
+                                    <div className="space-y-2">
+                                        <Label htmlFor="usageCap">Usage Cap</Label>
+                                        <Input id="usageCap" name="usageCap" type="number" required/>
+                                    </div>
+                                    <div className="space-y-2">
+                                        <Label htmlFor="expiration">Expiration</Label>
+                                        <Input id="expiration" name="expiration" type="date" required/>
+                                    </div>
+                                    <Button type="submit" disabled={isSubmitting}>
+                                        {isSubmitting ? (
+                                            <>
+                                                <Loader2 className="mr-2 h-4 w-4 animate-spin"/>
+                                                Creating...
+                                            </>
+                                        ) : (
+                                            "Generate Invite Code"
+                                        )}
+                                    </Button>
+                                </form>
                             </DialogContent>
                         </Dialog>
                     </CardTitle>
                 </CardHeader>
+                <CardContent>
+                    <Table>
+                        <TableHeader>
+                            <TableRow>
+                                <TableHead>Code</TableHead>
+                                <TableHead>Usage Cap</TableHead>
+                                <TableHead>Usage Count</TableHead>
+                                <TableHead>Expiration</TableHead>
+                                <TableHead>Action</TableHead>
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                            {inviteCodes.map(inviteCode => (
+                                <TableRow key={inviteCode.id}>
+                                    <TableCell>{inviteCode.code}</TableCell>
+                                    <TableCell>{inviteCode.usageCount}</TableCell>
+                                    <TableCell>{inviteCode.expiration}</TableCell>
+                                    <TableCell>{inviteCode.usageCap}</TableCell>
+                                    <TableCell>
+                                        <Button
+                                            variant="destructive"
+                                            size="sm"
+                                            onClick={() => handleDeleteInviteCode(inviteCode.id)}
+                                        >
+                                            <Trash2 className="h-4 w-4"/>
+                                            Delete
+                                        </Button>
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </CardContent>
             </Card>
         </div>
     )
