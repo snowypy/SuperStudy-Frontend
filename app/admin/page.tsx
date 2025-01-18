@@ -2,7 +2,7 @@
 
 import React, {useEffect, useState} from "react";
 import {useToast} from "@/hooks/use-toast";
-import {Loader2, Plus, Trash2} from "lucide-react";
+import {Hammer, Loader2, Plus, Trash2} from "lucide-react";
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 import {Dialog, DialogHeader, DialogTrigger, DialogContent, DialogTitle} from "@/components/ui/dialog";
 import {Button} from "@/components/ui/button";
@@ -187,6 +187,45 @@ export default function AdminPage() {
                                         >
                                             <Trash2 className="h-4 w-4"/>
                                             Delete
+                                        </Button>
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </CardContent>
+            </Card>
+
+            <Card>
+                <CardHeader>
+                    <CardTitle>Users</CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <Table>
+                        <TableHeader>
+                            <TableRow>
+                                <TableHead>Name</TableHead>
+                                <TableHead>Email</TableHead>
+                                <TableHead>Role</TableHead>
+                                <TableHead>Reg Date</TableHead>
+                                <TableHead>Actions</TableHead>
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                            {users.map(user => (
+                                <TableRow key={user.id}>
+                                    <TableCell>{user.name}</TableCell>
+                                    <TableCell>{user.email}</TableCell>
+                                    <TableCell>{user.role}</TableCell>
+                                    <TableCell>{user.regdate}</TableCell>
+                                    <TableCell>
+                                        <Button
+                                            variant="destructive"
+                                            size="sm"
+                                            onClick={() => handleDeleteUser(user.id)}
+                                        >
+                                            <Hammer className="h-4 w-4"/>
+                                            Ban Account
                                         </Button>
                                     </TableCell>
                                 </TableRow>
