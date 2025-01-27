@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import Cookie from 'js-cookie'
 import { toast } from '@/hooks/use-toast';
 import Link from 'next/link'
 
@@ -27,6 +28,8 @@ export default function SignIn() {
                     title: 'Successful Authorisation',
                     description: data.success
                 })
+                Cookie.set('token', data.token)
+                Cookie.set('userId', data.userId)
                 setTimeout(() => {
                     window.location.href = '/account';
                 }, 3000);

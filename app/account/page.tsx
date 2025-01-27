@@ -7,18 +7,29 @@ import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 import { Loader2, Upload } from 'lucide-react'
+import Cookie from 'js-cookie'
 import { useToast } from "@/hooks/use-toast";
 
 export default function AccountPage() {
     const [isLoading, setIsLoading] = useState(false)
     const [avatar, setAvatar] = useState('/placeholder.svg')
-    const [username, setUsername] = useState('Hard Koded')
+
+    const fetchUsername = async () => {
+        const userId = Cookie.get('userId')?.toString() || ''
+        const response = await fetch(`https://zap-api.snowy.codes/users/${userId}`)
+        const data = await response.json()
+        setUsername(data.username)
+    }
+
+    const [username, setUsername] = useState(fetchUsername() || 'Fetching..')
     const fileInputRef = useRef<HTMLInputElement>(null)
     const { toast } = useToast()
 
     const handleAvatarClick = () => {
         fileInputRef.current?.click()
     }
+
+    
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0]
@@ -31,37 +42,108 @@ export default function AccountPage() {
         }
     }
 
-    const handlePasswordChange = async (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault()
+    const handlePasswordChange = async (e: React.FormEvent) => {
+        e.preventDefault()
         setIsLoading(true)
 
-        // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 1500))
+        const form = e.currentTarget as HTMLFormElement
+        const oldPassword = (form.elements[0] as HTMLInputElement).value
+        const newPassword = (form.elements[1] as HTMLInputElement).value
+        const confirmPassword = (form.elements[2] as HTMLInputElement).value
+        const userId = Cookie.get('userId')?.toString() || ''
 
-        toast({
-            title: "Password updated",
-            description: "Your password has been changed.",
-        })
+        if (newPassword !== confirmPassword) {
+            toast({
+                title: "Password mismatch",
+                description: "New password and confirm password do not match.",
+                variant: 'destructive'
+            })
+            setIsLoading(false)
+            return
+        }
 
-        setIsLoading(false)
+        try {
+            const response = await fetch('https://zap-api.snowy.codes/users/change-password', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    userId,
+                    oldPassword,
+                    newPassword
+                })
+            })
+
+            const data = await response.json()
+
+            if (!response.ok) {
+                toast({
+                    title: "Error",
+                    description: data.message,
+                    variant: 'destructive'
+                })
+            } else {
+                toast({
+                    title: "Password Changed",
+                    description: data.success,
+                })
+            }
+            form.reset()
+        } catch (error) {
+            toast({
+                title: "Error",
+                description: error instanceof Error ? error.message : 'An unexpected error occurred',
+                variant: 'destructive'
+            })
+        } finally {
+            setIsLoading(false)
+        }
     }
 
     const handleUsernameChange = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         setIsLoading(true)
 
-        // fake api call
-        await new Promise(resolve => setTimeout(resolve, 1500))
-
         const formData = new FormData(event.currentTarget)
         const newUsername = formData.get('username') as string
 
+        if (newUsername === username) {
+            toast({
+                title: "Username unchanged",
+                description: "You have not changed your username.",
+                variant: 'destructive'
+            })
+            setIsLoading(false)
+            return
+        } else {
+            fetch('https://zap-api.snowy.codes/users/change-username', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    userId: Cookie.get('userId')?.toString() || '',
+                    username: newUsername
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    toast({
+                        title: "Username updated",
+                        description: data.success,
+                    })
+                } else {
+                    toast({
+                        title: "Error",
+                        description: data.message,
+                        variant: 'destructive'
+                    })
+                }
+            })
+        }
         setUsername(newUsername)
-
-        toast({
-            title: "Username updated",
-            description: "Your username has been changed.",
-        })
 
         setIsLoading(false)
     }
@@ -174,4 +256,3 @@ export default function AccountPage() {
         </div>
     )
 }
-
