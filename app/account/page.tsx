@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -18,12 +18,20 @@ export default function AccountPage() {
         const userId = Cookie.get('userId')?.toString() || ''
         const response = await fetch(`https://zap-api.snowy.codes/users/${userId}`)
         const data = await response.json()
-        setUsername(data.username)
+        return data.username
     }
 
-    const [username, setUsername] = useState(fetchUsername() || 'Fetching..')
+    const [username, setUsername] = useState('Fetching..')
     const fileInputRef = useRef<HTMLInputElement>(null)
     const { toast } = useToast()
+
+    useEffect(() => {
+        const getUsername = async () => {
+            const fetchedUsername = await fetchUsername();
+            setUsername(fetchedUsername || 'Fetching..');
+        };
+        getUsername();
+    }, []);
 
     const handleAvatarClick = () => {
         fileInputRef.current?.click()
