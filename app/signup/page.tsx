@@ -4,17 +4,42 @@ import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { toast } from '@/hooks/use-toast'
 import Link from 'next/link'
 
 export default function SignUp() {
-    const [name, setName] = useState('')
+    const [username, setUsername] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [inviteCode, setInviteCode] = useState('')
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
-        console.log('Hey, this route actually does nothing right now ;3 I am just a placeholder')
+        fetch('https://zap-api.snowy.codes/users/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username, email, password, inviteCode })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                toast({
+                    title: 'Successful Registration',
+                    description: data.success
+                })
+                setTimeout(() => {
+                    window.location.href = '/signin';
+                }, 3000);
+            } else {
+                toast({
+                    title: 'Failed Registration',
+                    description: data.message,
+                    variant: 'destructive'
+                })
+            }
+        })
     }
 
     return (
@@ -23,12 +48,12 @@ export default function SignUp() {
                 <h1 className="text-2xl sm:text-3x1 font-bold mb-6 text-center">Sign Up</h1>
                 <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
                     <div className="space-y-2">
-                        <Label htmlFor="name" className="text-sm font-medium">Name</Label>
+                        <Label htmlFor="name" className="text-sm font-medium">Username</Label>
                         <Input
-                            id="name"
+                            id="username"
                             type="text"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
                             required
                             className="w-full"
                         />
