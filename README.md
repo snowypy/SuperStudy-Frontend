@@ -33,6 +33,10 @@ This is a simple flashcard app that allows users to create, edit, and delete fla
 
 https://zap.snowy.codes
 
+## Disclosure
+
+Aspects of this frontend were made with Vercel's v0.
+
 ## Author
 
 - [Snowy](https://snowy.codes)
