@@ -1,12 +1,10 @@
 import './globals.css'
 import './global-styles.css'
-import { Inter } from 'next/font/google'
+import { Toaster } from '@/components/ui/toaster'
 import { ThemeProvider } from '@/lib/theme-provider'
 import localFont from 'next/font/local';
 import Header from "@/app/components/header";
 import Footer from "@/app/components/footer";
-
-const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
     title: 'ZapLearn - Studying done right',
@@ -38,6 +36,7 @@ export default function RootLayout({
                 <main className="min-h-screen ny-bg">{children}</main>
             </div>
             <Footer />
+            <Toaster />
         </ThemeProvider>
         </body>
         </html>
