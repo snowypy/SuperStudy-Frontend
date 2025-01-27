@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { toast } from '@/hooks/use-toast';
 import Link from 'next/link'
 
 export default function SignIn() {
@@ -12,7 +13,31 @@ export default function SignIn() {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
-        console.log('Hey, this route actually does nothing right now ;3 I am just a placeholder')
+        fetch('https://zap-api.snowy.codes/users/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email, password })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                toast({
+                    title: 'Successful Authorisation',
+                    description: data.success
+                })
+                setTimeout(() => {
+                    window.location.href = '/account';
+                }, 3000);
+            } else {
+                toast({
+                    title: 'Failed Authorisation',
+                    description: data.message,
+                    variant: 'destructive'
+                })
+            }
+        })
     }
 
     return (
